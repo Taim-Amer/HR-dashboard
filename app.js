@@ -7,10 +7,14 @@ app.get('/', (req, res) => {
     res.sendFile("./views/home.html", { root: __dirname })
 })
 
-app.listen(port, () => {
-    console.log(`http://localhost:${port}/`)
-})
+// app.listen(port, () => {
+//     console.log(``)
+// })
 
-mongoose.connect('mongodb://127.0.0.1:27017/test').then(() => { }).catch((error) => {
+mongoose.connect('mongodb+srv://devtaim:PNFGRSsHGVS00dIr@cluster0.1vbrm.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0').then(() => { 
+    app.listen(port, () => {
+        console.log('http://localhost:${port}/')
+    })
+}).catch((error) => {
     console.log(error);
- });
+})
