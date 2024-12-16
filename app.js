@@ -5,9 +5,19 @@ const mongoose = require('mongoose');
 const databaseLink = 'mongodb+srv://devtaim:PNFGRSsHGVS00dIr@cluster0.1vbrm.mongodb.net/all-data?retryWrites=true&w=majority&appName=Cluster0';
 app.use(express.urlencoded({extended: true}));
 const MyData = require("./models/schema");
+app.set('view engine', 'ejs');
 
 app.get('/', (req, res) => {
-    res.sendFile("./views/home.html", {root: __dirname})
+    MyData.find().then((result) => {
+        console.log(result)
+    }).catch((error) => {
+        console.log(error)
+    })
+    res.render('home', {myTitle : "Home Page"});
+})
+
+app.get('/index.html', (req, res) => {
+    res.send("<h1> Send Successfully !</h1>");
 })
 
 mongoose.connect(databaseLink).then(() => {
