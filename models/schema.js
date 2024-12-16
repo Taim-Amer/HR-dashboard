@@ -7,7 +7,7 @@ const articleSchema = new Schema({
 });
 
 //Create a Model based on that Schema
-const MyData = mongoose.model("MyDataa", articleSchema);
+const MyData = mongoose.model("MyData", articleSchema);
 
 //Export the Model
 module.exports = MyData;

@@ -3,9 +3,8 @@ const app = express()
 const port = 3000
 const mongoose = require('mongoose');
 const databaseLink = 'mongodb+srv://devtaim:PNFGRSsHGVS00dIr@cluster0.1vbrm.mongodb.net/all-data?retryWrites=true&w=majority&appName=Cluster0';
-app.use(express.urlencoded({extended:true}));
+app.use(express.urlencoded({extended: true}));
 const MyData = require("./models/schema");
-
 
 app.get('/', (req, res) => {
     res.sendFile("./views/home.html", {root: __dirname})
@@ -21,5 +20,11 @@ mongoose.connect(databaseLink).then(() => {
 
 app.post('/', (req, res) => {
     console.log(req.body)
-    res.redirect("/index.html")
+
+    const myData = new MyData(req.body);
+    myData.save().then(() => {
+        res.redirect("/index.html")
+    }).catch((error) => {
+        console.log(error)
+    })
 })
