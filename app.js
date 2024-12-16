@@ -9,11 +9,10 @@ app.set('view engine', 'ejs');
 
 app.get('/', (req, res) => {
     MyData.find().then((result) => {
-        console.log(result)
+        res.render('home', {myTitle : "Home Page", arr : result});
     }).catch((error) => {
         console.log(error)
     })
-    res.render('home', {myTitle : "Home Page"});
 })
 
 app.get('/index.html', (req, res) => {
