@@ -6,6 +6,23 @@ const databaseLink = 'mongodb+srv://devtaim:PNFGRSsHGVS00dIr@cluster0.1vbrm.mong
 app.use(express.urlencoded({extended: true}));
 const MyData = require("./models/schema");
 app.set('view engine', 'ejs');
+app.use(express.static('public'));
+
+//Auto Refresh
+const path = require("path");
+const livereload = require("livereload");
+const liveReloadServer = livereload.createServer({ port: 35731 });
+liveReloadServer.watch(path.join(__dirname, 'public'));
+
+
+const connectLivereload = require("connect-livereload");
+app.use(connectLivereload());
+
+liveReloadServer.server.once("connection", () => {
+    setTimeout(() => {
+        liveReloadServer.refresh("/");
+    }, 100);
+});
 
 app.get('/', (req, res) => {
     MyData.find().then((result) => {
