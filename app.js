@@ -11,8 +11,11 @@ app.use(express.static('public'));
 
 // GET Requests 
 app.get('/', (req, res) => {
-    res.render('index', {});
-
+    User.find().then((result) => {
+        res.render('index', {arr : result});
+    }).catch((error) => {
+        console.log(error)
+    })
 })
 
 app.get('/user/add.html', (req, res) => {
@@ -36,7 +39,7 @@ app.post('/user/add.html', (req, res) => {
     console.log(req.body)
     const user = new User(req.body);
     user.save().then(() => {
-        res.redirect('/user/add.html')
+        res.redirect('/')
     }).catch((error) => {
         console.log(error)
     })
