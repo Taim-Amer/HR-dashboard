@@ -12,7 +12,15 @@ app.use(express.static('public'));
 // GET Requests 
 app.get('/', (req, res) => {
     User.find().then((result) => {
-        res.render('index', {arr : result});
+        res.render('index', { arr: result });
+    }).catch((error) => {
+        console.log(error)
+    })
+})
+
+app.get('/user/:id', (req, res) => {
+    User.findById(req.params.id).then((result) => {
+        res.render('user/view', {obj : result})
     }).catch((error) => {
         console.log(error)
     })
@@ -28,10 +36,6 @@ app.get('/user/edit.html', (req, res) => {
 
 app.get('/user/search.html', (req, res) => {
     res.render('user/search');
-})
-
-app.get('/user/view.html', (req, res) => {
-    res.render('user/view')
 })
 
 //POST Request
