@@ -4,10 +4,12 @@ const port = 3000
 const mongoose = require('mongoose');
 const databaseLink = 'mongodb+srv://devtaim:PNFGRSsHGVS00dIr@cluster0.1vbrm.mongodb.net/all-data?retryWrites=true&w=majority&appName=Cluster0';
 app.use(express.urlencoded({ extended: true }));
-const MyData = require("./models/schema");
+const User = require("./models/customerSchema");
 app.set('view engine', 'ejs');
 app.use(express.static('public'));
 
+
+// GET Requests 
 app.get('/', (req, res) => {
     res.render('index', {});
 
@@ -22,11 +24,22 @@ app.get('/user/edit.html', (req, res) => {
 })
 
 app.get('/user/search.html', (req, res) => {
-    res.render('user/search'); 
+    res.render('user/search');
 })
 
 app.get('/user/view.html', (req, res) => {
     res.render('user/view')
+})
+
+//POST Request
+app.post('/user/add.html', (req, res) => {
+    console.log(req.body)
+    const user = new User(req.body);
+    user.save().then(() => {
+        res.redirect('/user/add.html')
+    }).catch((error) => {
+        console.log(error)
+    })
 })
 
 mongoose.connect(databaseLink).then(() => {
